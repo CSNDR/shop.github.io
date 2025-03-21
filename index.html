@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item Checkout</title>
+    <script>
+        var cart = [];
+        var favorites = [];
+
+        function calculateTotal() {
+            var priceList = {
+                'ITEM001': 10,
+                'ITEM002': 20,
+                'ITEM003': 30
+            };
+            var itemCode = document.getElementById('itemCode').value;
+            var quantity = parseInt(document.getElementById('quantity').value) || 0;
+            var price = priceList[itemCode] || 0;
+            var total = price * quantity;
+            document.getElementById('total').innerText = 'Total: $' + total;
+        }
+
+        function proceedToCheckout() {
+            alert('Proceeding to checkout with total amount: ' + document.getElementById('total').innerText);
+        }
+
+        function addToCart() {
+            var itemCode = document.getElementById('itemCode').value;
+            var quantity = parseInt(document.getElementById('quantity').value) || 0;
+            if (itemCode && quantity > 0) {
+                cart.push({ itemCode: itemCode, quantity: quantity });
+                alert(itemCode + ' added to cart!');
+            } else {
+                alert('Please enter a valid item code and quantity.');
+            }
+        }
+
+        function addToFavorites() {
+            var itemCode = document.getElementById('itemCode').value;
+            if (itemCode && !favorites.includes(itemCode)) {
+                favorites.push(itemCode);
+                alert(itemCode + ' added to favorites!');
+            } else {
+                alert('Please enter a valid item code or item is already in favorites.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Item Checkout</h2>
+    <label for="itemCode">Item Code:</label>
+    <input type="text" id="itemCode" oninput="calculateTotal()"><br><br>
+    
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" min="1" value="1" oninput="calculateTotal()"><br><br>
+    
+    <p id="total">Total: $0</p>
+    <button onclick="addToCart()">Add to Cart</button>
+    <button onclick="addToFavorites()">Favorite</button>
+    <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+</body>
+</html>
